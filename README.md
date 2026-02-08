@@ -26,3 +26,8 @@ sudo dnf install nginx -y
 sudo systemctl start nginx
 sudo systemctl enable nginx
 
+## 🔁 CI/CD Pipeline
+- Implemented automated deployment using GitHub Actions
+- Used SSH-based deployment to AWS EC2
+- Managed sensitive credentials using GitHub Secrets
+- Achieved zero-touch deployment on every push to main branch
