@@ -1,0 +1,26 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            sudo mkdir -p /var/www/cicd-site
+            sudo chown -R ec2-user:ec2-user /var/www/cicd-site
+            echo "<h1>CI/CD Auto Deployment Successful</h1><p>Deployed via GitHub Actions</p>" > /var/www/cicd-site/index.html
+            sudo systemctl restart nginx
